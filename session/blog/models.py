@@ -1,12 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import CustomUser
+from users.models import CustomUser
 
 class Blog(models.Model):
     title = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
     image = models.ImageField(upload_to='blog/', null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     tag = models.ManyToManyField('Tag', blank=True)
 
     class Meta:
@@ -23,7 +24,7 @@ class Comment(models.Model):
     content = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
 
     class Meta:
         db_table = 'comment'
